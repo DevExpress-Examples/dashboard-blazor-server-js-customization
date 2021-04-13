@@ -3,7 +3,7 @@
 
 * [Dashboard.razor](./CS/BlazorDashboardApp/Pages/Dashboard.razor)
 * [_Host.cshtml](./CS/BlazorDashboardApp/Pages/_Host.cshtml)
-* [dashboard-events-scripts.js](./CS/DashboardLocalizationCore/wwwroot/dashboard-events-scripts.js)
+* [dashboard-events-scripts.js](./CS/BlazorDashboardApp/wwwroot/dashboard-events-scripts.js)
 <!-- default file list end -->
 
 # Dashboard Blazor Server App - JavaScript Customization
