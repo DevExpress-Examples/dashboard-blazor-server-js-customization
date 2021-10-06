@@ -1,3 +1,4 @@
+using System;
 using DevExpress.DashboardAspNetCore;
 using DevExpress.DashboardCommon;
 using DevExpress.DashboardWeb;
@@ -8,7 +9,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
-using System;
 
 namespace BlazorDashboardApp {
     public class Startup {
@@ -25,19 +25,24 @@ namespace BlazorDashboardApp {
         public void ConfigureServices(IServiceCollection services) {
             services.AddRazorPages();
             services.AddServerSideBlazor();
-            services.AddMvc()
-                    .AddDefaultDashboardController(configurator => {
-                    // Register Dashboard Storage
-                    configurator.SetDashboardStorage(new DashboardFileStorage(FileProvider.GetFileInfo("App_Data/Dashboards").PhysicalPath));
-                    // Create a sample JSON data source
-                    DataSourceInMemoryStorage dataSourceStorage = new DataSourceInMemoryStorage();
-                        DashboardJsonDataSource jsonDataSourceUrl = new DashboardJsonDataSource("JSON Data Source (URL)");
-                        jsonDataSourceUrl.JsonSource = new UriJsonSource(
-                                new Uri("https://raw.githubusercontent.com/DevExpress-Examples/DataSources/master/JSON/customers.json"));
-                        jsonDataSourceUrl.RootElement = "Customers";
-                        dataSourceStorage.RegisterDataSource("jsonDataSourceUrl", jsonDataSourceUrl.SaveToXml());
-                        configurator.SetDataSourceStorage(dataSourceStorage);
-                    });
+            services.AddMvc();
+
+            services.AddScoped<DashboardConfigurator>((IServiceProvider serviceProvider) => {
+                DashboardConfigurator configurator = new DashboardConfigurator();
+
+                // Register Dashboard Storage
+                configurator.SetDashboardStorage(new DashboardFileStorage(FileProvider.GetFileInfo("App_Data/Dashboards").PhysicalPath));
+                // Create a sample JSON data source
+                DataSourceInMemoryStorage dataSourceStorage = new DataSourceInMemoryStorage();
+                DashboardJsonDataSource jsonDataSourceUrl = new DashboardJsonDataSource("JSON Data Source (URL)");
+                jsonDataSourceUrl.JsonSource = new UriJsonSource(
+                        new Uri("https://raw.githubusercontent.com/DevExpress-Examples/DataSources/master/JSON/customers.json"));
+                jsonDataSourceUrl.RootElement = "Customers";
+                dataSourceStorage.RegisterDataSource("jsonDataSourceUrl", jsonDataSourceUrl.SaveToXml());
+                configurator.SetDataSourceStorage(dataSourceStorage);
+
+                return configurator;
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -56,7 +61,7 @@ namespace BlazorDashboardApp {
             app.UseRouting();
 
             app.UseEndpoints(endpoints => {
-                EndpointRouteBuilderExtension.MapDashboardRoute(endpoints, "api/dashboard");
+                EndpointRouteBuilderExtension.MapDashboardRoute(endpoints, "api/dashboard", "DefaultDashboard");
                 endpoints.MapBlazorHub();
                 endpoints.MapFallbackToPage("/_Host");
             });
