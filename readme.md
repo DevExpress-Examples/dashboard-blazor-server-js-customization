@@ -3,15 +3,16 @@
 [![](https://img.shields.io/badge/Open_in_DevExpress_Support_Center-FF7200?style=flat-square&logo=DevExpress&logoColor=white)](https://supportcenter.devexpress.com/ticket/details/T989998)
 [![](https://img.shields.io/badge/📖_How_to_use_DevExpress_Examples-e9f6fc?style=flat-square)](https://docs.devexpress.com/GeneralInformation/403183)
 <!-- default badges end -->
+
+# Dashboard for Blazor Server - JavaScript Customization
+
 <!-- default file list -->
-*Files to look at*:
+## Files to Look At
 
 * [Dashboard.razor](./CS/BlazorDashboardApp/Pages/Dashboard.razor)
 * [_Host.cshtml](./CS/BlazorDashboardApp/Pages/_Host.cshtml)
 * [dashboard-events-scripts.js](./CS/BlazorDashboardApp/wwwroot/dashboard-events-scripts.js)
 <!-- default file list end -->
-
-# Dashboard for Blazor Server - JavaScript Customization
 
 This example shows how you can customize the `DxDashboard` component with JavaScript:
 
