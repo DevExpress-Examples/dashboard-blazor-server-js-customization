@@ -11,7 +11,7 @@
 * [dashboard-events-scripts.js](./CS/BlazorDashboardApp/wwwroot/dashboard-events-scripts.js)
 <!-- default file list end -->
 
-# Dashboard Blazor Server App - JavaScript Customization
+# Dashboard for Blazor Server - JavaScript Customization
 
 This example shows how you can customize the `DxDashboard` component with JavaScript:
 
