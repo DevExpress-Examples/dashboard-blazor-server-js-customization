@@ -1,9 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Dashboard>
-  <Title Text="Sample Dashboard" />
+  <Title Text="Companies" />
   <DataSources>
-    <JsonDataSource Name="JSON Data Source (URL)" RootElement="Customers" ComponentName="jsonDataSource1">
-      <Source SourceType="DevExpress.DataAccess.Json.UriJsonSource" Uri="https://raw.githubusercontent.com/DevExpress-Examples/DataSources/master/JSON/customers.json" />
+    <JsonDataSource Name="Customers" ConnectionName="jsonCustomers" RootElement="Customers" ComponentName="jsonDataSource1">
       <Schema>
         <Node Name="root" Type="System.Object" Selected="true" NodeType="Object">
           <Node Name="Customers" Selected="true" NodeType="Array">
@@ -24,24 +23,27 @@
     </JsonDataSource>
   </DataSources>
   <Parameters>
-    <Parameter Name="TestParameters">
-      <StaticListLookUpSettings>
-        <Values>
-          <Value>TestParameter1</Value>
-          <Value>TestParameter2</Value>
-          <Value>TestParameter3</Value>
-        </Values>
-      </StaticListLookUpSettings>
+    <Parameter Name="Region" AllowMultiselect="true">
+      <Values>
+        <Value>SP</Value>
+        <Value>RJ</Value>
+        <Value>OR</Value>
+      </Values>
+      <DynamicListLookUpSettings DataSourceName="jsonDataSource1" ValueMember="Region" DisplayMember="Region" SortOrder="None" />
     </Parameter>
   </Parameters>
   <Items>
-    <Grid ComponentName="gridDashboardItem1" Name="Companies" DataSource="jsonDataSource1">
+    <Grid ComponentName="gridDashboardItem1" Name="Companies" DataSource="jsonDataSource1" FilterString="[DataItem4] In(?Region)">
       <DataItems>
         <Dimension DataMember="City" DefaultId="DataItem0" />
         <Dimension DataMember="Address" DefaultId="DataItem1" />
         <Dimension DataMember="Phone" DefaultId="DataItem2" />
         <Dimension DataMember="CompanyName" DefaultId="DataItem3" />
+        <Dimension DataMember="Region" DefaultId="DataItem4" />
       </DataItems>
+      <HiddenDimensions>
+        <Dimension DefaultId="DataItem4" />
+      </HiddenDimensions>
       <GridColumns>
         <GridDimensionColumn>
           <Dimension DefaultId="DataItem3" />
@@ -57,11 +59,17 @@
         </GridDimensionColumn>
       </GridColumns>
       <GridOptions />
+      <ColumnFilterOptions />
     </Grid>
-    <ListBox ComponentName="listBoxDashboardItem1" Name="Countries" DataSource="jsonDataSource1">
+    <CustomItem ComponentName="customItemDashboardItem1" Name="Parameters" DataSource="jsonDataSource1" CustomItemType="ParameterItem" />
+    <ListBox ComponentName="listBoxDashboardItem1" Name="City" DataSource="jsonDataSource1" FilterString="[DataItem1] In(?Region)">
       <DataItems>
-        <Dimension DataMember="Country" DefaultId="DataItem0" />
+        <Dimension DataMember="City" DefaultId="DataItem0" />
+        <Dimension DataMember="Region" DefaultId="DataItem1" />
       </DataItems>
+      <HiddenDimensions>
+        <Dimension DefaultId="DataItem1" />
+      </HiddenDimensions>
       <FilterDimensions>
         <Dimension DefaultId="DataItem0" />
       </FilterDimensions>
@@ -69,8 +77,11 @@
   </Items>
   <LayoutTree>
     <LayoutGroup>
-      <LayoutItem DashboardItem="listBoxDashboardItem1" Weight="0.4024802705749718" />
-      <LayoutItem DashboardItem="gridDashboardItem1" Weight="1.5975197294250283" />
+      <LayoutGroup Orientation="Vertical" Weight="0.4898589113516708">
+        <LayoutItem DashboardItem="customItemDashboardItem1" Weight="0.6423252790646753" />
+        <LayoutItem DashboardItem="listBoxDashboardItem1" Weight="1.3576747209353248" />
+      </LayoutGroup>
+      <LayoutItem DashboardItem="gridDashboardItem1" Weight="1.5101410886483293" />
     </LayoutGroup>
   </LayoutTree>
 </Dashboard>
