@@ -1,329 +1,216 @@
-(function webpackUniversalModuleDefinition(root, factory) {
-    if (typeof exports === "object" && typeof module === "object") module.exports = factory(require("devexpress-dashboard/model"), require("devexpress-dashboard/designer"), require("devexpress-dashboard/common"), require("devextreme/ui/button")); else if (typeof define === "function" && define.amd) define(["devexpress-dashboard/model", "devexpress-dashboard/designer", "devexpress-dashboard/common", "devextreme/ui/button"], factory); else {
-        var a = typeof exports === "object" ? factory(require("devexpress-dashboard/model"), require("devexpress-dashboard/designer"), require("devexpress-dashboard/common"), require("devextreme/ui/button")) : factory(root["DevExpress"]["Dashboard"]["Model"], root["DevExpress"]["Dashboard"]["Designer"], root["DevExpress"]["Dashboard"], root["DevExpress"]["ui"]["dxButton"]);
-        for (var i in a) (typeof exports === "object" ? exports : root)[i] = a[i];
-    }
-})(window, function (__WEBPACK_EXTERNAL_MODULE__0__, __WEBPACK_EXTERNAL_MODULE__1__, __WEBPACK_EXTERNAL_MODULE__2__, __WEBPACK_EXTERNAL_MODULE__20__) {
-    return function (modules) {
-        var installedModules = {};
-        function __webpack_require__(moduleId) {
-            if (installedModules[moduleId]) {
-                return installedModules[moduleId].exports;
-            }
-            var module = installedModules[moduleId] = {
-                i: moduleId,
-                l: false,
-                exports: {}
-            };
-            modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
-            module.l = true;
-            return module.exports;
-        }
-        __webpack_require__.m = modules;
-        __webpack_require__.c = installedModules;
-        __webpack_require__.d = function (exports, name, getter) {
-            if (!__webpack_require__.o(exports, name)) {
-                Object.defineProperty(exports, name, {
-                    enumerable: true,
-                    get: getter
-                });
-            }
-        };
-        __webpack_require__.r = function (exports) {
-            if (typeof Symbol !== "undefined" && Symbol.toStringTag) {
-                Object.defineProperty(exports, Symbol.toStringTag, {
-                    value: "Module"
-                });
-            }
-            Object.defineProperty(exports, "__esModule", {
-                value: true
-            });
-        };
-        __webpack_require__.t = function (value, mode) {
-            if (mode & 1) value = __webpack_require__(value);
-            if (mode & 8) return value;
-            if (mode & 4 && typeof value === "object" && value && value.__esModule) return value;
-            var ns = Object.create(null);
-            __webpack_require__.r(ns);
-            Object.defineProperty(ns, "default", {
-                enumerable: true,
-                value: value
-            });
-            if (mode & 2 && typeof value != "string") for (var key in value) __webpack_require__.d(ns, key, function (key) {
-                return value[key];
-            }.bind(null, key));
-            return ns;
-        };
-        __webpack_require__.n = function (module) {
-            var getter = module && module.__esModule ? function getDefault() {
-                return module["default"];
-            } : function getModuleExports() {
-                return module;
-            };
-            __webpack_require__.d(getter, "a", getter);
-            return getter;
-        };
-        __webpack_require__.o = function (object, property) {
-            return Object.prototype.hasOwnProperty.call(object, property);
-        };
-        __webpack_require__.p = "";
-        return __webpack_require__(__webpack_require__.s = 18);
-    }([function (module, exports) {
-        module.exports = __WEBPACK_EXTERNAL_MODULE__0__;
-    }, function (module, exports) {
-        module.exports = __WEBPACK_EXTERNAL_MODULE__1__;
-    }, function (module, exports) {
-        module.exports = __WEBPACK_EXTERNAL_MODULE__2__;
-    }, , , , function (module, exports, __webpack_require__) {
-        "use strict";
-        exports.__esModule = true;
-        var model_1 = __webpack_require__(0);
-        var designer_1 = __webpack_require__(1);
-        var onOffButtons = [{
-            text: "On"
+window.ParameterCustomItem = (function () {
+    const Model = DevExpress.Dashboard.Model;
+    const Designer = DevExpress.Dashboard.Designer;
+
+    const PARAMETER_EXTENSION_NAME = 'ParameterItem';
+
+    const onOffButtons = [{ text: 'On' }, { text: 'Off' }];
+    const buttonsStyle = {
+        containerHeight: 60,
+        height: 40,
+        width: 82,
+        marginRight: 15,
+        marginTop: 10
+    };
+
+    const svgIcon = `<?xml version="1.0" encoding="utf-8"?>
+        <svg version="1.1" id="` + PARAMETER_EXTENSION_NAME + `" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	         viewBox="0 0 24 24" style="enable-background:new 0 0 24 24;" xml:space="preserve">
+        <g class="st0">
+	        <path class="dx-dashboard-contrast-icon" d="M6,12c0.4,0,0.7,0.1,1,0.2V5c0-0.6-0.4-1-1-1S5,4.4,5,5v7.2
+		        C5.3,12.1,5.6,12,6,12z M6,18c-0.4,0-0.7-0.1-1-0.2V19c0,0.6,0.4,1,1,1s1-0.4,1-1v-1.2C6.7,17.9,6.4,18,6,18z M12,6
+		        c0.4,0,0.7,0.1,1,0.2V5c0-0.6-0.4-1-1-1s-1,0.4-1,1v1.2C11.3,6.1,11.6,6,12,6z M12,12c-0.4,0-0.7-0.1-1-0.2V19c0,0.6,0.4,1,1,1
+		        s1-0.4,1-1v-7.2C12.7,11.9,12.4,12,12,12z M18,17c-0.4,0-0.7-0.1-1-0.2V19c0,0.6,0.4,1,1,1s1-0.4,1-1v-2.2C18.7,16.9,18.4,17,18,17
+		        z M18,11c0.4,0,0.7,0.1,1,0.2V5c0-0.6-0.4-1-1-1s-1,0.4-1,1v6.2C17.3,11.1,17.6,11,18,11z"/>
+        </g>
+        <path class="dx-dashboard-accent-icon" d="M6,12c-1.7,0-3,1.3-3,3s1.3,3,3,3s3-1.3,3-3S7.7,12,6,12z M6,16c-0.6,0-1-0.4-1-1
+	        s0.4-1,1-1s1,0.4,1,1S6.6,16,6,16z M12,6c-1.7,0-3,1.3-3,3s1.3,3,3,3s3-1.3,3-3S13.7,6,12,6z M12,10c-0.6,0-1-0.4-1-1s0.4-1,1-1
+	        s1,0.4,1,1S12.6,10,12,10z M18,11c-1.7,0-3,1.3-3,3s1.3,3,3,3s3-1.3,3-3S19.7,11,18,11z M18,15c-0.6,0-1-0.4-1-1s0.4-1,1-1
+	        s1,0.4,1,1S18.6,15,18,15z"/>
+        </svg>`;
+
+    const parameterMetadata = {
+        customProperties: [{
+            ownerType: Model.CustomItem,
+            propertyName: 'showHeaders',
+            valueType: 'string',
+            defaultValue: 'On',
         }, {
-            text: "Off"
-        }];
-        exports.PARAMETER_ITEM_EXTENSION_NAME = "ParameterItem";
-        exports.parameterItemMeta = {
-            customProperties: [{
-                ownerType: model_1.CustomItem,
-                propertyName: "showHeaders",
-                valueType: "string",
-                defaultValue: "On"
+            ownerType: Model.CustomItem,
+            propertyName: 'showParameterName',
+            valueType: 'string',
+            defaultValue: 'On',
+        }, {
+            ownerType: Model.CustomItem,
+            propertyName: 'automaticUpdates',
+            valueType: 'string',
+            defaultValue: 'Off',
+        }],
+        optionsPanelSections: [{
+            title: 'Parameters settings',
+            items: [{
+                dataField: 'showHeaders',
+                template: Designer.FormItemTemplates.buttonGroup,
+                editorOptions: {
+                    items: onOffButtons,
+                },
             }, {
-                ownerType: model_1.CustomItem,
-                propertyName: "showParameterName",
-                valueType: "string",
-                defaultValue: "On"
+                dataField: 'showParameterName',
+                template: Designer.FormItemTemplates.buttonGroup,
+                editorOptions: {
+                    items: onOffButtons,
+                },
             }, {
-                ownerType: model_1.CustomItem,
-                propertyName: "automaticUpdates",
-                valueType: "string",
-                defaultValue: "Off"
+                dataField: 'automaticUpdates',
+                template: Designer.FormItemTemplates.buttonGroup,
+                editorOptions: {
+                    items: onOffButtons,
+                },
             }],
-            optionsPanelSections: [{
-                title: "Parameters settings",
-                items: [{
-                    dataField: "showHeaders",
-                    template: designer_1.FormItemTemplates.buttonGroup,
-                    editorOptions: {
-                        items: onOffButtons
-                    }
-                }, {
-                    dataField: "showParameterName",
-                    template: designer_1.FormItemTemplates.buttonGroup,
-                    editorOptions: {
-                        items: onOffButtons
-                    }
-                }, {
-                    dataField: "automaticUpdates",
-                    template: designer_1.FormItemTemplates.buttonGroup,
-                    editorOptions: {
-                        items: onOffButtons
-                    }
-                }]
-            }],
-            icon: exports.PARAMETER_ITEM_EXTENSION_NAME,
-            title: "Parameters"
-        };
-    }, , , , , , , , , , , , function (module, exports, __webpack_require__) {
-        "use strict";
-        exports.__esModule = true;
-        var meta_1 = __webpack_require__(6);
-        var viewer_1 = __webpack_require__(19);
-        var icon_1 = __webpack_require__(21);
-        var ParameterItemExtension = function () {
-            function ParameterItemExtension(dashboardControl) {
-                var _this = this;
-                this.dashboardControl = dashboardControl;
-                this.name = meta_1.PARAMETER_ITEM_EXTENSION_NAME;
-                this.metaData = meta_1.parameterItemMeta;
-                this.createViewerItem = function (model, element, content) {
-                    var parametersExtension = _this.dashboardControl.findExtension("dashboard-parameter-dialog");
-                    if (!parametersExtension) {
-                        throw Error('The "dashboard-parameter-dialog" extension does not exist. To register this extension, use the DashboardControl.registerExtension method.');
-                    }
-                    return new viewer_1.ParameterItemViewer(model, element, content, parametersExtension);
-                };
-                dashboardControl.registerIcon(icon_1.PARAMETER_ITEM_ICON);
+        }],
+        icon: PARAMETER_EXTENSION_NAME,
+        title: 'Parameters',
+    };
+
+    function ParameterItemViewer(model, $container, options, parametersExtension) {
+        DevExpress.Dashboard.CustomItemViewer.call(this, model, $container, options);
+
+        this.buttons = [];
+
+        this.parametersExtension = parametersExtension;
+        this._subscribeProperties();
+        this.parametersExtension.showDialogButton(false);
+        this.parametersExtension.subscribeToContentChanges(() => {
+            this._generateParametersContent();
+        });
+        this.dialogButtonSubscribe = this.parametersExtension.showDialogButton.subscribe(() => {
+            this.parametersExtension.showDialogButton(false);
+        });
+    }
+
+    ParameterItemViewer.prototype = Object.create(DevExpress.Dashboard.CustomItemViewer.prototype);
+    ParameterItemViewer.prototype.constructor = ParameterItemViewer;
+
+    ParameterItemViewer.prototype.setSize = function (width, height) {
+        Object.getPrototypeOf(ParameterItemViewer.prototype).setSize.call(this, width, height);
+        this._setGridHeight();
+    };
+
+    ParameterItemViewer.prototype.dispose = function () {
+        Object.getPrototypeOf(ParameterItemViewer.prototype).dispose.call(this);
+        this.parametersContent && this.parametersContent.dispose && this.parametersContent.dispose();
+        this.dialogButtonSubscribe.dispose();
+        this.parametersExtension.showDialogButton(true);
+        this.buttons.forEach(button => button.dispose());
+    }
+
+    ParameterItemViewer.prototype.renderContent = function ($element, changeExisting) {
+        var element = $element.get(0);
+        if (!changeExisting) {
+            while (element.firstChild)
+                element.removeChild(element.firstChild);
+            this.buttons.forEach(button => button.dispose());
+            element.style.overflow = 'auto';
+
+            this.gridContainer = document.createElement('div');
+            element.appendChild(this.gridContainer);
+            this._generateParametersContent();
+            this.buttonContainer = document.createElement('div');
+            this.buttonContainer.style.height = buttonsStyle.containerHeight + 'px';
+            this.buttonContainer.style.width = buttonsStyle.width * 2 + buttonsStyle.marginRight * 2 + 'px';
+            this.buttonContainer.style.cssFloat = 'right';
+
+            element.appendChild(this.buttonContainer);
+            this.buttons.push(this._createButton(this.buttonContainer, "Reset", () => {
+                this.parametersContent.resetParameterValues();
+            }));
+            this.buttons.push(this._createButton(this.buttonContainer, "Submit", () => {
+                this._submitValues();
+            }));
+            if (this.getPropertyValue('automaticUpdates') !== 'Off')
+                this.buttonContainer.style.display = 'none';
+        }
+    };
+
+    ParameterItemViewer.prototype._generateParametersContent = function () {
+        this.parametersContent = this.parametersExtension.renderContent(this.gridContainer);
+        this.parametersContent.valueChanged.add(() => this._updateParameterValues());
+        this._setGridHeight();
+        this._update({
+            showHeaders: this.getPropertyValue('showHeaders'),
+            showParameterName: this.getPropertyValue('showParameterName')
+        });
+    };
+
+    ParameterItemViewer.prototype._submitValues = function () {
+        this.parametersContent.submitParameterValues();
+        this._update({
+            showHeaders: this.getPropertyValue('showHeaders'),
+            showParameterName: this.getPropertyValue('showParameterName')
+        });
+    };
+
+    ParameterItemViewer.prototype._updateParameterValues = function () {
+        this.getPropertyValue('automaticUpdates') !== 'Off' ? this._submitValues() : null;
+    };
+
+    ParameterItemViewer.prototype._setGridHeight = function () {
+        var gridHeight = this.contentHeight();
+        if (this.getPropertyValue('automaticUpdates') === 'Off')
+            gridHeight -= buttonsStyle.containerHeight;
+        this.parametersContent.grid.option('height', gridHeight);
+    };
+
+    ParameterItemViewer.prototype._createButton = function (container, buttonText, onClick) {
+        var button = document.createElement("div");
+        button.style.marginRight = buttonsStyle.marginRight + 'px';
+        button.style.marginTop = buttonsStyle.marginTop + 'px';
+        container.appendChild(button);
+        return new DevExpress.ui.dxButton(button, {
+            text: buttonText,
+            height: buttonsStyle.height + 'px',
+            width: buttonsStyle.width + 'px',
+            onClick: onClick
+        });
+    };
+
+    ParameterItemViewer.prototype._subscribeProperties = function () {
+        this.subscribe('showHeaders', (showHeaders) => { this._update({ showHeaders: showHeaders }); });
+        this.subscribe('showParameterName', (showParameterName) => { this._update({ showParameterName: showParameterName }); });
+        this.subscribe('automaticUpdates', (automaticUpdates) => { this._update({ automaticUpdates: automaticUpdates }) });
+    };
+
+    ParameterItemViewer.prototype._update = function (options) {
+        if (options.showHeaders) {
+            this.parametersContent.grid.option('showColumnHeaders', options.showHeaders === 'On');
+        }
+        if (options.showParameterName) {
+            this.parametersContent.valueChanged.empty();
+            this.parametersContent.grid.columnOption(0, 'visible', options.showParameterName === 'On');
+            this.parametersContent.valueChanged.add(() => { return this._updateParameterValues(); });
+        }
+        if (options.automaticUpdates) {
+            if (options.automaticUpdates === 'Off') {
+                this.buttonContainer.style.display = 'block';
+            } else {
+                this.buttonContainer.style.display = 'none';
             }
-            ParameterItemExtension.prototype.start = function () { };
-            return ParameterItemExtension;
-        }();
-        exports.ParameterItemExtension = ParameterItemExtension;
-    }, function (module, exports, __webpack_require__) {
-        "use strict";
-        var __extends = this && this.__extends || function () {
-            var extendStatics = function (d, b) {
-                extendStatics = Object.setPrototypeOf || {
-                    __proto__: []
-                } instanceof Array && function (d, b) {
-                    d.__proto__ = b;
-                } || function (d, b) {
-                    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-                };
-                return extendStatics(d, b);
-            };
-            return function (d, b) {
-                extendStatics(d, b);
-                function __() {
-                    this.constructor = d;
-                }
-                d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-            };
-        }();
-        exports.__esModule = true;
-        var button_1 = __webpack_require__(20);
-        var buttonsStyle = {
-            containerHeight: 60,
-            height: 40,
-            width: 82,
-            marginRight: 15,
-            marginTop: 10
-        };
-        var common_1 = __webpack_require__(2);
-        var ParameterItemViewer = function (_super) {
-            __extends(ParameterItemViewer, _super);
-            function ParameterItemViewer(model, container, options, parametersExtension) {
-                var _this = _super.call(this, model, container, options) || this;
-                _this.buttons = [];
-                _this.parametersExtension = parametersExtension;
-                _this._subscribeProperties();
-                _this.parametersExtension.showDialogButton(false);
-                _this.parametersExtension.subscribeToContentChanges(function () {
-                    _this._generateParametersContent();
-                });
-                _this.dialogButtonSubscribe = _this.parametersExtension.showDialogButton.subscribe(function () {
-                    _this.parametersExtension.showDialogButton(false);
-                });
-                return _this;
+        }
+        this._setGridHeight();
+    };
+
+    function ParameterItem(dashboardControl) {
+        dashboardControl.registerIcon(svgIcon);
+        this.name = PARAMETER_EXTENSION_NAME;
+        this.metaData = parameterMetadata;
+        this.createViewerItem = function (model, $element, content) {
+            var parametersExtension = dashboardControl.findExtension("dashboard-parameter-dialog");
+            if (!parametersExtension) {
+                throw Error('The "dashboard-parameter-dialog" extension does not exist. To register this extension, call the DashboardControl.registerExtension method and pass the extension name.');
             }
-            ParameterItemViewer.prototype.setSize = function (width, height) {
-                _super.prototype.setSize.call(this, width, height);
-                this._setGridHeight();
-            };
-            ParameterItemViewer.prototype.dispose = function () {
-                _super.prototype.dispose.call(this);
-                this.parametersContent && this.parametersContent.dispose && this.parametersContent.dispose();
-                this.dialogButtonSubscribe.dispose();
-                this.parametersExtension.showDialogButton(true);
-                this.buttons.forEach(function (button) {
-                    return button.dispose();
-                });
-            };
-            ParameterItemViewer.prototype.renderContent = function (dxElement, changeExisting, afterRenderCallback) {
-                var _this = this;
-                var element = dxElement.jquery ? dxElement.get(0) : dxElement;
-                if (!changeExisting) {
-                    element.innerHTML = "";
-                    this.buttons.forEach(function (button) {
-                        return button.dispose();
-                    });
-                    element.style.overflow = "auto";
-                    this.gridContainer = document.createElement("div");
-                    element.appendChild(this.gridContainer);
-                    this._generateParametersContent();
-                    this.buttonContainer = document.createElement("div");
-                    this.buttonContainer.style.height = buttonsStyle.containerHeight + "px", this.buttonContainer.style.width = buttonsStyle.width * 2 + buttonsStyle.marginRight * 2 + "px",
-                        this.buttonContainer.style.cssFloat = "right";
-                    element.appendChild(this.buttonContainer);
-                    this.buttons.push(this._createButton(this.buttonContainer, "Reset", function () {
-                        _this.parametersContent.resetParameterValues();
-                    }));
-                    this.buttons.push(this._createButton(this.buttonContainer, "Submit", function () {
-                        _this._submitValues();
-                    }));
-                    if (this.getPropertyValue("automaticUpdates") != "Off") this.buttonContainer.style.display = "none";
-                }
-            };
-            ParameterItemViewer.prototype._generateParametersContent = function () {
-                var _this = this;
-                this.parametersContent = this.parametersExtension.renderContent(this.gridContainer);
-                this.parametersContent.valueChanged.add(function () {
-                    return _this._updateParameterValues();
-                });
-                this._setGridHeight();
-                this._update({
-                    showHeaders: this.getPropertyValue("showHeaders"),
-                    showParameterName: this.getPropertyValue("showParameterName")
-                });
-            };
-            ParameterItemViewer.prototype._submitValues = function () {
-                this.parametersContent.submitParameterValues();
-                this._update({
-                    showHeaders: this.getPropertyValue("showHeaders"),
-                    showParameterName: this.getPropertyValue("showParameterName")
-                });
-            };
-            ParameterItemViewer.prototype._updateParameterValues = function () {
-                this.getPropertyValue("automaticUpdates") != "Off" ? this._submitValues() : null;
-            };
-            ParameterItemViewer.prototype._setGridHeight = function () {
-                var gridHeight = this.contentHeight();
-                if (this.getPropertyValue("automaticUpdates") === "Off") gridHeight -= buttonsStyle.containerHeight;
-                this.parametersContent.grid.option("height", gridHeight);
-            };
-            ParameterItemViewer.prototype._createButton = function (container, buttonText, onClick) {
-                var button = document.createElement("div");
-                button.style.marginRight = buttonsStyle.marginRight + "px";
-                button.style.marginTop = buttonsStyle.marginTop + "px";
-                container.appendChild(button);
-                return new (button_1["default"] || window.DevExpress.ui.dxButton)(button, {
-                    text: buttonText,
-                    height: buttonsStyle.height + "px",
-                    width: buttonsStyle.width + "px",
-                    onClick: onClick
-                });
-            };
-            ParameterItemViewer.prototype._subscribeProperties = function () {
-                var _this = this;
-                this.subscribe("showHeaders", function (showHeaders) {
-                    _this._update({
-                        showHeaders: showHeaders
-                    });
-                });
-                this.subscribe("showParameterName", function (showParameterName) {
-                    _this._update({
-                        showParameterName: showParameterName
-                    });
-                });
-                this.subscribe("automaticUpdates", function (automaticUpdates) {
-                    _this._update({
-                        automaticUpdates: automaticUpdates
-                    });
-                });
-            };
-            ParameterItemViewer.prototype._update = function (options) {
-                var _this = this;
-                if (!!options.showHeaders) {
-                    this.parametersContent.grid.option("showColumnHeaders", options.showHeaders === "On");
-                }
-                if (!!options.showParameterName) {
-                    this.parametersContent.valueChanged.empty();
-                    this.parametersContent.grid.columnOption(0, "visible", options.showParameterName === "On");
-                    this.parametersContent.valueChanged.add(function () {
-                        return _this._updateParameterValues();
-                    });
-                }
-                if (!!options.automaticUpdates) {
-                    if (options.automaticUpdates == "Off") {
-                        this.buttonContainer.style.display = "block";
-                    } else {
-                        this.buttonContainer.style.display = "none";
-                    }
-                }
-                this._setGridHeight();
-            };
-            return ParameterItemViewer;
-        }(common_1.CustomItemViewer);
-        exports.ParameterItemViewer = ParameterItemViewer;
-    }, function (module, exports) {
-        module.exports = __WEBPACK_EXTERNAL_MODULE__20__;
-    }, function (module, exports, __webpack_require__) {
-        "use strict";
-        exports.__esModule = true;
-        var meta_1 = __webpack_require__(6);
-        exports.PARAMETER_ITEM_ICON = '<svg id="' + meta_1.parameterItemMeta.icon + '" viewBox="0 0 24 24" width="24" height="24"><circle cx="12" cy="12" r="11" fill="#39A866" /></svg>';
-    }]);
-});
+            return new ParameterItemViewer(model, $element, content, parametersExtension);
+        }
+    };
+
+    return ParameterItem;
+})();

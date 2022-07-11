@@ -1,8 +1,9 @@
 ﻿window.dashboardEvents = {
     onBeforeRender: (args) => {
-        // Registers the Parameter item.
+        // Registers the Parameter item and the Dashboard Panel.
         var dashboardControl = args.component;
-        dashboardControl.registerExtension(new ParameterItemExtension(dashboardControl));
+        dashboardControl.registerExtension(new ParameterCustomItem(dashboardControl));
+        dashboardControl.registerExtension(new DevExpress.Dashboard.DashboardPanelExtension(dashboardControl));
 
         // Removes the "New..." menu item from the dashboard menu.
         var toolbox = dashboardControl.findExtension('toolbox');
