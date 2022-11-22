@@ -36,7 +36,7 @@ app.UseStaticFiles();
 app.UseDevExpressControls();
 app.UseRouting();
 
-EndpointRouteBuilderExtension.MapDashboardRoute(app, "api/dashboard", "DefaultDashboard");
+app.MapDashboardRoute("api/dashboard", "DefaultDashboard");
 
 app.MapBlazorHub();
 app.MapFallbackToPage("/_Host");
