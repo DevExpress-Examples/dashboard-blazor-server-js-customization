@@ -205,7 +205,7 @@
             this.metaData = parameterMetadata;
         }
         createViewerItem = (model, $element, content) => {
-            var parametersExtension = this.dashboardControl.findExtension("dashboard-parameter-dialog");
+            var parametersExtension = this.dashboardControl.findExtension("dashboardParameterDialog");
             if (!parametersExtension) {
                 throw Error('The "dashboard-parameter-dialog" extension does not exist. To register this extension, call the DashboardControl.registerExtension method and pass the extension name.');
             }
