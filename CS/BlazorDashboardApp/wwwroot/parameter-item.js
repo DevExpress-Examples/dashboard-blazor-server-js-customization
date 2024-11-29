@@ -103,7 +103,7 @@
         }
 
         renderContent($element, changeExisting) {
-            var element = $element.get(0);
+            var element = $element.jquery ? $element.get(0) : $element;
             if (!changeExisting) {
                 while (element.firstChild)
                     element.removeChild(element.firstChild);
